@@ -1,17 +1,18 @@
-import 'dart:ffi';
-
+// import 'dart:ffi';
 import 'package:flutter/material.dart';
 
-class Person {
-  String name;
-  int age;
-  Char gender;
-  Person({String name, int age, this.gender}) {
-    // this.gender => // named args
-    this.name = name;
-    this.age = age;
-  }
-}
+import './question.dart';
+
+// class Person {
+//   String name;
+//   int age;
+//   Char gender;
+//   Person({String name, int age, this.gender}) {
+//     // this.gender => // named args
+//     this.name = name;
+//     this.age = age;
+//   }
+// }
 
 void main() {
   // var p1 = Person(name: "Omar");
@@ -22,21 +23,22 @@ void main() {
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return _MyAppState();
   }
 }
 
-class MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> {
+  // _class name => it makes it private and accessable in this class only
   // StatelessWidget => A class to create your own widgets
-  int questionIndex = 0;
-  var questions = [
+  int _questionIndex = 0;
+  var _questions = [
     'What\'s your favorite color ?',
     'What\'s your favorite movie ?'
   ];
 
-  void answerQuestion() {
+  void _answerQuestion() {
     setState(() {
-      questionIndex = questionIndex + 1;
+      _questionIndex = _questionIndex + 1;
     });
   }
 
@@ -45,13 +47,14 @@ class MyAppState extends State<MyApp> {
     // MaterialApp => it returns a compination of widgets into a real app
     return MaterialApp(
         home: Scaffold(
+      // Scaffold => creates a base page design,
       appBar: AppBar(
         title: Text("My First App"),
       ),
       body: Column(children: [
-        Text(questions[questionIndex]),
+        Question(QuestionText: _questions[_questionIndex]),
         ElevatedButton(
-          onPressed: answerQuestion,
+          onPressed: _answerQuestion,
           child: Text("Answer 1"),
         ),
         ElevatedButton(
@@ -65,7 +68,13 @@ class MyAppState extends State<MyApp> {
           child: Text("Answer 3"),
         ),
       ]),
-    ) // Scaffold => creates a base page design,
-        );
+    ));
   }
 }
+
+
+/*
+style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.blue),
+    ),
+*/
