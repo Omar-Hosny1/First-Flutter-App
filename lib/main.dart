@@ -1,4 +1,5 @@
 // import 'dart:ffi';
+import 'package:first_app/answer.dart';
 import 'package:flutter/material.dart';
 
 import './question.dart';
@@ -32,8 +33,18 @@ class _MyAppState extends State<MyApp> {
   // StatelessWidget => A class to create your own widgets
   int _questionIndex = 0;
   var _questions = [
-    'What\'s your favorite color ?',
-    'What\'s your favorite movie ?'
+    {
+      'QT': 'What\'s your favorite color ?',
+      'answers': ['Black', 'Red', 'White']
+    },
+    {
+      'QT': 'What\'s your favorite movie ?',
+      'answers': ['Lion King', 'Soul', 'John Wick 3']
+    },
+    {
+      'QT': 'What\'s your favorite cat ?',
+      'answers': ['BMW', 'Mercides', 'Hyndai']
+    },
   ];
 
   void _answerQuestion() {
@@ -52,21 +63,11 @@ class _MyAppState extends State<MyApp> {
         title: Text("My First App"),
       ),
       body: Column(children: [
-        Question(QuestionText: _questions[_questionIndex]),
-        ElevatedButton(
-          onPressed: _answerQuestion,
-          child: Text("Answer 1"),
-        ),
-        ElevatedButton(
-          onPressed: () => print("Answered 2"),
-          child: Text("Answer 2"),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            print("Answered 3");
-          },
-          child: Text("Answer 3"),
-        ),
+        Question(QuestionText: _questions[_questionIndex]['QT']),
+        ...(_questions[_questionIndex]['answers'] as List<String>)
+            .map((answer) {
+          return Answer(_answerQuestion, answer);
+        }).toList()
       ]),
     ));
   }
