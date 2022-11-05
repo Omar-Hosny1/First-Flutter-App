@@ -1,5 +1,7 @@
 // import 'dart:ffi';
 import 'package:first_app/answer.dart';
+import 'package:first_app/quiz.dart';
+import 'package:first_app/result.dart';
 import 'package:flutter/material.dart';
 
 import './question.dart';
@@ -32,44 +34,47 @@ class _MyAppState extends State<MyApp> {
   // _class name => it makes it private and accessable in this class only
   // StatelessWidget => A class to create your own widgets
   int _questionIndex = 0;
-  var _questions = [
+  List<Map<String, List<String>>> _questions = [
     {
-      'QT': 'What\'s your favorite color ?',
+      'QT': ['What\'s your favorite color ?'],
       'answers': ['Black', 'Red', 'White']
     },
     {
-      'QT': 'What\'s your favorite movie ?',
+      'QT': ['What\'s your favorite movie ?'],
       'answers': ['Lion King', 'Soul', 'John Wick 3']
     },
     {
-      'QT': 'What\'s your favorite cat ?',
+      'QT': ['What\'s your favorite cat ?'],
       'answers': ['BMW', 'Mercides', 'Hyndai']
     },
   ];
 
   void _answerQuestion() {
-    setState(() {
-      _questionIndex = _questionIndex + 1;
-    });
+    if (_questionIndex < _questions.length) {
+      setState(() {
+        _questionIndex = _questionIndex + 1;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     // MaterialApp => it returns a compination of widgets into a real app
     return MaterialApp(
-        home: Scaffold(
-      // Scaffold => creates a base page design,
-      appBar: AppBar(
-        title: Text("My First App"),
+      home: Scaffold(
+        // Scaffold => creates a base page design,
+        appBar: AppBar(
+          title: Text("My First App"),
+        ),
+        body: _questionIndex < _questions.length
+            ? Quiz(
+                _questions,
+                _answerQuestion,
+                _questionIndex,
+              )
+            : Result(),
       ),
-      body: Column(children: [
-        Question(QuestionText: _questions[_questionIndex]['QT']),
-        ...(_questions[_questionIndex]['answers'] as List<String>)
-            .map((answer) {
-          return Answer(_answerQuestion, answer);
-        }).toList()
-      ]),
-    ));
+    );
   }
 }
 
