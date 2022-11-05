@@ -1,21 +1,7 @@
 // import 'dart:ffi';
-import 'package:first_app/answer.dart';
 import 'package:first_app/quiz.dart';
 import 'package:first_app/result.dart';
 import 'package:flutter/material.dart';
-
-import './question.dart';
-
-// class Person {
-//   String name;
-//   int age;
-//   Char gender;
-//   Person({String name, int age, this.gender}) {
-//     // this.gender => // named args
-//     this.name = name;
-//     this.age = age;
-//   }
-// }
 
 void main() {
   // var p1 = Person(name: "Omar");
@@ -34,27 +20,51 @@ class _MyAppState extends State<MyApp> {
   // _class name => it makes it private and accessable in this class only
   // StatelessWidget => A class to create your own widgets
   int _questionIndex = 0;
-  List<Map<String, List<String>>> _questions = [
+
+  final _questions = const [
     {
-      'QT': ['What\'s your favorite color ?'],
-      'answers': ['Black', 'Red', 'White']
+      'questionText': 'What\'s your favorite color?',
+      'answers': [
+        {'text': 'Black', 'score': 10},
+        {'text': 'Red', 'score': 5},
+        {'text': 'Green', 'score': 3},
+        {'text': 'White', 'score': 1},
+      ],
     },
     {
-      'QT': ['What\'s your favorite movie ?'],
-      'answers': ['Lion King', 'Soul', 'John Wick 3']
+      'questionText': 'What\'s your favorite animal?',
+      'answers': [
+        {'text': 'Rabbit', 'score': 3},
+        {'text': 'Snake', 'score': 11},
+        {'text': 'Elephant', 'score': 5},
+        {'text': 'Lion', 'score': 9},
+      ],
     },
     {
-      'QT': ['What\'s your favorite cat ?'],
-      'answers': ['BMW', 'Mercides', 'Hyndai']
+      'questionText': 'Who\'s your favorite car?',
+      'answers': [
+        {'text': 'BMW', 'score': 10},
+        {'text': 'Kia', 'score': 5},
+        {'text': 'Urus', 'score': 7},
+        {'text': 'Ferrari', 'score': 8},
+      ],
     },
   ];
 
-  void _answerQuestion() {
-    if (_questionIndex < _questions.length) {
-      setState(() {
-        _questionIndex = _questionIndex + 1;
-      });
-    }
+  int _totalScore = 0;
+
+  void onResetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
+  void _answerQuestion(int score) {
+    setState(() {
+      _questionIndex = _questionIndex + 1;
+    });
+    _totalScore += score;
   }
 
   @override
@@ -72,15 +82,8 @@ class _MyAppState extends State<MyApp> {
                 _answerQuestion,
                 _questionIndex,
               )
-            : Result(),
+            : Result(_totalScore, onResetQuiz),
       ),
     );
   }
 }
-
-
-/*
-style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.blue),
-    ),
-*/

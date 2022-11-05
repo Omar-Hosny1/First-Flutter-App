@@ -3,9 +3,9 @@ import 'package:first_app/answer.dart';
 import 'package:first_app/question.dart';
 
 class Quiz extends StatelessWidget {
-  final VoidCallback answerQuestion;
-  final List<Map<String, List<String>>> questions;
+  final List<Map<String, Object>> questions;
   final int questionIndex;
+  final Function answerQuestion;
 
   Quiz(@required this.questions, @required this.answerQuestion,
       @required this.questionIndex);
@@ -13,9 +13,10 @@ class Quiz extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Question(QuestionText: questions[questionIndex]['QT'][0]),
-      ...(questions[questionIndex]['answers']).map((answer) {
-        return Answer(answerQuestion, answer);
+      Question(QuestionText: questions[questionIndex]['questionText']),
+      ...(questions[questionIndex]['answers'] as List<Map<String, Object>>)
+          .map((answer) {
+        return Answer(() => answerQuestion(answer['score']), answer['text']);
       }).toList()
     ]);
   }

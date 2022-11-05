@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Answer extends StatelessWidget {
-  final VoidCallback selectHandler;
+  final Function selectHandler;
   final String
       AnswerText; // final means that it will not change after the first declaration (constructor);
 
