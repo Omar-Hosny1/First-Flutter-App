@@ -1,7 +1,8 @@
 // import 'dart:ffi';
-import 'package:first_app/quiz.dart';
-import 'package:first_app/result.dart';
 import 'package:flutter/material.dart';
+import './new_btns.dart';
+import './result.dart';
+import './quiz.dart';
 
 void main() {
   // var p1 = Person(name: "Omar");
@@ -84,6 +85,19 @@ class _MyAppState extends State<MyApp> {
               )
             : Result(_totalScore, onResetQuiz),
       ),
+
+      // ***********************
+      //     home: Scaffold(
+      //   appBar: AppBar(
+      //     title: Text("New Btns"),
+      //   ),
+      //   body: Column(
+      //     children: [
+      //       BtnsUpdated(),
+      //     ],
+      //   ),
+      // )
+      // ***********************
     );
   }
 }
